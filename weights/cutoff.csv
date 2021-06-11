@@ -1,0 +1,3 @@
+model_name,cutoff
+xgb_adult,0.240855821
+xgb_ped,0.874690875

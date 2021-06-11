@@ -1,0 +1,207 @@
+{% extends 'layouts/main.html' %}
+{% block title %}ShoQPred{% endblock %}
+{% block content %}
+
+<style>
+.column {
+    float: left;
+    padding: 10px;
+    height: 200px;
+}
+
+ .left {
+    width: 200px;
+}
+
+ .right {
+    width: 390px;
+}
+
+ .format {
+    background-color: black;
+    color: white;
+    margin: 20px;
+ }
+
+  .row:after {
+     content: "";
+     display: table;
+     clear: both;
+       }
+  .random {
+    color: black
+  }
+
+</style>
+
+
+    <div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+
+        <!-- App details -->
+        <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="home">
+            <h1 class="w3-wide">ShoQPred - AI for Shock Prediction in ICU Validated across Continents</h1>
+            <h3 class="w3-opacity"><i>Predicting Hemodynamic shock using physiological vitals time-series data</i></h3>
+            <p class="w3-justify">
+                <div class="w3-row w3-padding-32">
+                    <div class="w3-half">
+            <p>IIIT Delhi</p>
+            <img src="/static/img/iiitd.png" alt="Random Name" style="width:50%">
+        </div>
+        <div class="w3-half">
+            <p>AIIMS</p>
+            <img src="/static/img/aiims.jpg"
+                 class="w3-round" alt="Random Name" style="width:50%">
+        </div>
+    </div>
+    </div>
+
+    <!-- Demonstration division -->
+    <div class="w3-black" align="center" id="demonstration">
+        <div class="w3-container w3-content w3-padding-64" style="max-width:800px">
+            <h2 class="w3-wide w3-center">DEMONSTRATION</h2><br>
+
+            <br><br><br>
+
+            <style>
+                input[type=submit] {
+                    border-radius: 4px;
+                }
+
+                .buttonRound {
+                    border-radius: 4px;
+                    text-align: center;
+                }
+
+            </style>
+
+            <!-- <form action="http://localhost:5000/start" method="get">-->
+            <!--            <p><h2><input type="submit" name="submit_button" value="Start Modelling >"></h2></p>-->
+            <!--        </form>-->
+            <button onclick="document.getElementById('ticketModal1').style.display='block'"
+                    class="w3-button w3-blue-grey buttonRound"><h2>Start Modelling ></h2></button>
+
+        </div>
+    </div>
+
+
+    <div class="w3-container w3-content w3-padding-64" style="max-width:800px" align="center" id="authors">
+        <h2 class="w3-wide w3-center">AUTHORS</h2><br>
+        
+        <!-- Tav Sir -->
+        <div class="row">
+            <div class="column left format">
+                <img src="/static/img/tp.jpg" width="160"
+                     height="180" align="center">
+            </div>
+            <div class="column right format" align="left">
+                <h3>Tavpritesh Sethi</h3>
+                <p>Visiting Assistant Professor, Stanford Medicine<br>Assistant Professor, IIIT-Delhi<br>tavsethi@stanford.edu
+                    | tavpriteshsethi@iiitd.ac.in</p>
+                <p class="random">
+                    <a href="mailto:tavsethi@stanford.edu">
+                        <img &nbsp src="/static/img/mail.png"
+                             width="30" height="30"></a>
+                    ....<a href="mailto:tavpriteshsethi@iiitd.ac.in">
+                    <img &nbsp src="/static/img/mail.png"
+                         width="30" height="30"></a></nbsp></nbsp>
+                    ....<a href="https://www.facebook.com/tavpritesh.sethi">
+                    <img &nbsp
+                         src="/static/img/fb.png"
+                         width="30" height="30"></a></nbsp></nbsp>
+                    ....<a href="https://in.linkedin.com/in/tavpritesh">
+                    <img &nbsp src="/static/img/lin.png" width="30"
+                         height="30"></a></nbsp></nbsp>
+                    ....<a href="https://twitter.com/tavpritesh">
+                    <img &nbsp src="/static/img/twitter.png" width="30"
+                         height="30"></a>
+                </p>
+            </div>
+        </div>
+        <br>
+
+        <!-- Aditya -->
+        <div class="row">
+            <div class="column left format">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwyGnV_y2eK9V99dCB_l0c98zNzRvpmvmRDbY7C8g3Wm18f3PLbQ"
+                     width="160" height="180" align="center">
+            </div>
+            <div class="column right format" align="left">
+                <h3>Aditya Nagori</h3>
+            </div>
+        </div>
+        <br>
+    </div>
+
+    <!-- Modal asking for AHE/SHOCK options-->
+    <div id="ticketModal1" class="w3-modal">
+        <div class="modal-dialog">
+            <div class="w3-modal-content w3-animate-top w3-card">
+                <header class="w3-container w3-blue-grey w3-center w3-padding">
+            <span onclick="document.getElementById('ticketModal1').style.display='none'"
+                  class="w3-button w3-blue-grey w3-xlarge w3-display-topright">×</span>
+                    <h3 class="w3-auto"><i class="fa w3-margin-right"></i>Settings</h3>
+                </header>
+                <br>
+                <div class="w3-container">
+                    <form method="post" action="start" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="w3-row mx-auto margin">
+                            <h3>Predicting</h3>
+                            <div class="w3-quarter">
+                                Shock prediction<br>
+                            </div>
+                            <div class="w3-threequarter">
+                                <!--Shock-->
+                                <input type="radio" name="to_predict" id="shock" value="shock" checked="checked"/><br>
+                            </div>
+                        </div>
+
+                        <div class="w3-row mx-auto margin">
+                            <h3>Time Frame</h3>
+                            <div class="w3-threequarter">
+                                <!--Random forest-->
+                                <select id="mytime" name="time">
+                                  <option value="8">8</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="w3-row mx-auto margin">
+                            <h3>Select Gender</h3>
+                            <div class="w3-threequarter">
+                                <select id="mygender" name="gender">
+                                  <option value="1">Male</option>
+                                  <option value="0">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="w3-row mx-auto margin">
+                            <h3>Enter Age</h3>
+                            <div>
+                                <label for="age"></label>
+                                <input type="text" id="age" name="age" value="55"><br>
+                            </div>
+                        </div>
+                        <br>
+
+
+                        <button type="submit" value="Upload"
+                                class="w3-button w3-block w3-black w3-padding w3-section w3-right">Start <i
+                                class="fa fa-check"></i></button>
+                    </form>
+                    <br>
+                    <button class="w3-button w3-red w3-section w3-black"
+                            onclick="document.getElementById('ticketModal1').style.display='none'">Close <i
+                            class="fa fa-remove"></i></button>
+                    <!--            <p class="w3-right">Need <a href="#" class="w3-text-blue">help?</a></p>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+
+

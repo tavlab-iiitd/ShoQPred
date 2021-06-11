@@ -1,0 +1,15 @@
+asgiref
+autopep8
+Django
+pycodestyle
+pytz
+sqlparse
+Unipath
+dj-database-url
+pandas
+python-decouple
+gunicorn
+whitenoise
+django-heroku
+tsfresh
+scikit-learn

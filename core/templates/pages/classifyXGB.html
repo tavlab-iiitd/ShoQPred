@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<title>Modelling</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+</style>
+<body class="w3-light-grey w3-content" style="max-width:1600px">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white" style="z-index:3;width:200px;" id="mySidebar"><br>
+  <div class="w3-container">
+    <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
+      <i class="fa fa-remove"></i>
+    </a>
+    <img src="https://static.thenounproject.com/png/995090-200.png" style="width:45%;" class="w3-round"><br><br>
+    <h4><b>ShoQPred</b></h4><br>
+
+  </div>
+   <div class="w3-bar-block">
+    <a href="{% url 'home' %}" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa  fa-home fa-fw w3-margin-right"></i>HOME</a>
+    <a href="{% url 'start' %}" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-globe w3-margin-right"></i>MODEL</a>
+    <a href="{% url 'git' %}" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-github fa-fw w3-margin-right"></i>GIT</a>
+    <a href="{% url 'authors' %}" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>AUTHORS</a>
+  </div>
+</nav>
+
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px">
+
+  <!-- Header -->
+  <header id="portfolio">
+<!--  Image if any required  <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>-->
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="w3-container">
+    <h1><b>ShoQPred</b></h1>
+    <div class="w3-section w3-bottombar w3-padding-16">
+        <a href="{% url 'uploadcsv' %}" class="w3-button w3-white buttonRound"><i class="fa w3-margin-center"></i>Data</a>
+        <a href="{% url 'preprocessing' %}" class="w3-button w3-white buttonRound"><i class="fa w3-margin-center"></i>Processing</a>
+      <button class="w3-button w3-white buttonRound w3-text-teal" onclick="divVisibility('Div4');"><i class="fa w3-margin-center">Prediction</i></button>
+    </div>
+    </div>
+  </header>
+
+    <style>
+        .divStyle {
+          margin-top: 20px;
+          margin-right: 60px;
+        }
+
+        .buttonRound{
+            border-radius: 4px;
+            text-align: center;
+        }
+
+
+        .right{
+            right:0px;
+        }
+
+        .transparent{
+            background-color: Transparent;
+         }
+
+         .margin{
+            margin-top: 30px;
+         }
+    </style>
+
+
+<!-- Classification division -->
+   <div id="Div4" class="divStyle w3-row-padding w3-container">
+<!--       <button class="w3-button w3-black buttonRound">Calculate features using tsfresh<i class="fa  fa-sitemap fa-fw w3-margin-left"></i></button>-->
+{#       <a href="http://localhost:5000/prediction" onclick="divVisibility('Div4');" class="w3-button w3-black buttonRound">Predict</a>#}
+<!--       <button class="w3-button w3-black w3-right w3-margin-bottom buttonRound fa-upload">Download<i class="fa  fa-download fa-fw w3-margin-left"></i></button>-->
+       {% if result %}
+       <a href="{% url 'download' 3 %}" onclick="w3_close()" class="w3-button w3-black w3-right buttonRound">Download<i class="fa  fa-download fa-fw w3-margin-left"></i></a>
+       {% endif %}
+       <br><br>
+       {{result | safe}}
+
+      
+       <div id="myPie"></div>
+
+<script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+<!-- <script src="https://d3js.org/d3-selection.v1.js"></script> -->
+ 
+<script src="static/js/d3pie.js"></script>
+<script src="static/js/d3.v4.min.js"></script>
+<script>
+    var pie = new d3pie("myPie", {
+    header: {
+        title: {
+            text: "Shock Probablities"
+        }
+    },
+    data: {
+        content: [
+            { label: "Shock", value: parseFloat("{{ shock | safe}}") },
+            { label: "Non-Shcok", value: parseFloat("{{ ns | safe}}") },
+        ]
+     },
+ 
+    //Here further operations/animations can be added like click event, cut out the clicked pie section.
+     callbacks: {
+        onMouseoverSegment: function(info) {
+            console.log("mouse in", info);
+        },
+        onMouseoutSegment: function(info) {
+            console.log("mouseout:", info);
+        }
+    }
+      
+});
+ 
+</script>
+   </div>
+
+</div>
+
+
+
+
+    <script>
+    function dataFunc() {
+      var x = document.getElementById("dataDiv");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+
+    function processFunc(){
+        var x = document.getElementById("processDiv");
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+    }
+
+
+    var divs = ["Div4"];
+    var visibleDivId = null;
+    function divVisibility(divId) {
+      if(visibleDivId === divId) {
+        visibleDivId = null;
+      } else {
+        visibleDivId = divId;
+      }
+      hideNonVisibleDivs();
+    }
+    function hideNonVisibleDivs() {
+      var i, divId, div;
+      for(i = 0; i < divs.length; i++) {
+        divId = divs[i];
+        div = document.getElementById(divId);
+        if(visibleDivId === divId) {
+          div.style.display = "block";
+        } else {
+          div.style.display = "none";
+        }
+      }
+    }
+
+
+    $(document).ready(function(){
+      $('.dropdown a.test').on("click", function(e){
+        $(this).next('ul').toggle();
+        e.stopPropagation();
+        e.preventDefault();
+      });
+    });
+    </script>
+
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+
+</body>
+</html>
